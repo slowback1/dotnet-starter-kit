@@ -4,6 +4,7 @@ vars:
   SOLUTION_FILE: DotNetStarterKit.sln
   API_PROJECT: WebAPI
   API_APPSETTINGS_DEV: WebAPI/appsettings.Development.json
+  CONSOLE_APPSETTINGS_DEV: ConsoleUtilities/appsettings.Development.json
 
 tasks:
   setup:
@@ -11,6 +12,7 @@ tasks:
     cmds:
       - dotnet restore {{.SOLUTION_FILE}}
       - task: create-dev-appsettings
+      - task: create-dev-appsettings-console
     
   create-dev-appsettings:
     desc: Create appsettings.Development.json if it doesn't exist
@@ -41,6 +43,36 @@ tasks:
         fi
     status:
       - test -f {{.API_APPSETTINGS_DEV}}
+
+  create-dev-appsettings-console:
+    desc: Create ConsoleUtilities/appsettings.Development.json if it doesn't exist
+    cmds:
+      - |
+        if [ ! -f "{{.CONSOLE_APPSETTINGS_DEV}}" ]; then
+          echo "Creating {{.CONSOLE_APPSETTINGS_DEV}}..."
+          cat > {{.CONSOLE_APPSETTINGS_DEV}} << 'EOF'
+        {
+          "Logging": {
+            "LogLevel": {
+              "Default": "Information",
+              "Microsoft.AspNetCore": "Warning"
+            }
+          },
+          "AllowedHosts": "*",
+          "CrudFactory": {
+            "Implementation": "InMemory"
+          },
+          "FileData": {
+            "Directory": "data"
+          }
+        }
+        EOF
+          echo "Created {{.CONSOLE_APPSETTINGS_DEV}}"
+        else
+          echo "{{.CONSOLE_APPSETTINGS_DEV}} already exists"
+        fi
+    status:
+      - test -f {{.CONSOLE_APPSETTINGS_DEV}}
 
   build:
     desc: Build the entire solution
@@ -95,3 +127,18 @@ tasks:
     cmds:
       - task help
     silent: true
+
+  reset-dev:
+    desc: Reset the development environment (delete dev appsettings, clean, and setup)
+    cmds:
+      - |
+        if [ -f "{{.API_APPSETTINGS_DEV}}" ]; then
+          echo "Deleting {{.API_APPSETTINGS_DEV}}..."
+          rm {{.API_APPSETTINGS_DEV}}
+        fi
+        if [ -f "{{.CONSOLE_APPSETTINGS_DEV}}" ]; then
+          echo "Deleting {{.CONSOLE_APPSETTINGS_DEV}}..."
+          rm {{.CONSOLE_APPSETTINGS_DEV}}
+        fi
+      - task: clean
+      - task: setup

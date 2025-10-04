@@ -20,7 +20,7 @@ public class FileCrudFactoryTests
     [SetUp]
     public void SetUp()
     {
-        _testDataDirectory = Path.Combine(Path.GetTempPath(), "StepperGame.FileData.Tests", Guid.NewGuid().ToString());
+        _testDataDirectory = Path.Combine(Path.GetTempPath(), "FileData.Tests", Guid.NewGuid().ToString());
         Directory.CreateDirectory(_testDataDirectory);
     }
 

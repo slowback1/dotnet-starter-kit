@@ -1,7 +1,6 @@
 ﻿using Common.Interfaces;
-using Common.Utilities.Time;
 
-namespace Slowback.Time;
+namespace Common.Utilities.Time;
 
 public static class TimeEnvironment
 {

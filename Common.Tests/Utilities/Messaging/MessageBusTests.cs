@@ -4,7 +4,7 @@ namespace Common.Tests.Utilities.Messaging;
 
 public class TestMessage
 {
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
     public int Value { get; set; }
 }
 
@@ -79,7 +79,7 @@ public class MessageBusTests
         var message = "test";
         var receivedMessage = "";
 
-        MessageBus.Subscribe<string>(message, async m => { receivedMessage = m; });
+        MessageBus.Subscribe<string>(message, m => { receivedMessage = m; });
 
         await MessageBus.PublishAsync(message, message);
 
@@ -90,7 +90,7 @@ public class MessageBusTests
     public void CanHandleComplexTypes()
     {
         var message = new TestMessage { Message = "complex", Value = 42 };
-        TestMessage receivedMessage = null;
+        TestMessage? receivedMessage = null;
 
         MessageBus.Subscribe<TestMessage>(message.Message, m => receivedMessage = m);
         MessageBus.Publish(message.Message, message);
@@ -232,7 +232,7 @@ public class MessageBusTests
     public void DoesNotExplodeWhenSubscribingToAllMessagesAndReceivesAComplexTypeThatItIsNotExpecting()
     {
         var message = new TestMessage { Message = "complex", Value = 42 };
-        string receivedMessage = null;
+        string? receivedMessage = null;
 
         MessageBus.SubscribeToAllMessages<string>(m => { receivedMessage = "got it"; });
 

@@ -7,30 +7,30 @@ public class TestObject
 {
     [Length(5)]
     [Required]
-    public string Value { get; set; }
+    public string Value { get; set; } = string.Empty;
 }
 
 [MatchingProperty(nameof(A), nameof(B))]
 public class MatchingPropertyTest
 {
-    public string A { get; set; }
-    public string B { get; set; }
+    public string A { get; set; } = string.Empty;
+    public string B { get; set; } = string.Empty;
 }
 
 public class TestEmpty
 {
-    public string A { get; set; }
+    public string A { get; set; } = string.Empty;
 }
 
 public class Child
 {
     [Length(min: 2)]
-    public string Value { get; set; }
+    public string Value { get; set; } = string.Empty;
 }
 
 public class ParentList
 {
-    public List<Child> Children { get; set; }
+    public List<Child> Children { get; set; } = new();
 }
 
 public class ObjectValidatorTests
@@ -58,7 +58,7 @@ public class ObjectValidatorTests
     [Test]
     public void ReturnsAnEmptyListForANullObject()
     {
-        TestObject test = null;
+        TestObject? test = null;
 
         var result = ObjectValidator.ValidateObject(test);
 

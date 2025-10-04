@@ -25,5 +25,5 @@ public class LoginRequest
 
 public class UserResponse : AppUser
 {
-    public string Token { get; set; }
+    public string Token { get; set; } = string.Empty;
 }

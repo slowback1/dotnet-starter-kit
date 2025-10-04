@@ -23,7 +23,7 @@ public class LoginUseCase
         if (user == null)
             return UseCaseResult<UserResponse>.Failure("User not found");
 
-        if (!_passwordHasher.VerifyPassword(request.Password, user.Password))
+        if (user.Password == null || !_passwordHasher.VerifyPassword(request.Password, user.Password))
             return UseCaseResult<UserResponse>.Failure("Invalid password");
 
         var token = _tokenHandler.GenerateToken(user);

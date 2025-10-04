@@ -15,12 +15,12 @@ public class DictionaryFeatureFlagProvider : IFeatureFlagProvider
         _featureFlags = featureFlags;
     }
 
-    public async Task<IEnumerable<FeatureFlag>> GetFeatureFlags()
+    public Task<IEnumerable<FeatureFlag>> GetFeatureFlags()
     {
-        return _featureFlags.Select(kvp => new FeatureFlag
+        return Task.FromResult(_featureFlags.Select(kvp => new FeatureFlag
         {
             Name = kvp.Key,
             IsEnabled = kvp.Value
-        });
+        }));
     }
 }

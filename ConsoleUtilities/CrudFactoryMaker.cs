@@ -16,11 +16,9 @@ public class CrudFactoryMaker
             case "filedata":
                 var dataDirectory = configuration["FileData:Directory"] ?? "data";
                 return new FileCrudFactory(dataDirectory);
-                break;
             case "inmemory":
             default:
                 return new InMemoryCrudFactory();
-                break;
         }
     }
 }

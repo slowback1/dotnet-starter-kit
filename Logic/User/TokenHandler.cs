@@ -60,11 +60,11 @@ public class TokenHandler : ITokenHandler
 
             return new AppUser
             {
-                Id = id,
-                Name = name
+                Id = id ?? string.Empty,
+                Name = name ?? string.Empty
             };
         }
-        catch (TokenExpiredException ex)
+        catch (TokenExpiredException)
         {
             throw;
         }

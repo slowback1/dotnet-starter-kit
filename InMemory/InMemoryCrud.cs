@@ -27,7 +27,7 @@ public abstract class InMemoryCrud<T> : ICrud<T> where T : class, IIdentifyable
         if (!ItemsByType.ContainsKey(type))
             return Task.FromResult<T?>(null);
         var item = ItemsByType[type].FirstOrDefault(i => i.Id == id);
-        return Task.FromResult(item);
+        return Task.FromResult<T?>(item);
     }
 
     public virtual Task<T?> UpdateAsync(string id, T item)
@@ -60,7 +60,7 @@ public abstract class InMemoryCrud<T> : ICrud<T> where T : class, IIdentifyable
         if (!ItemsByType.ContainsKey(type))
             return Task.FromResult<T?>(null);
         var item = ItemsByType[type].FirstOrDefault(query);
-        return Task.FromResult(item);
+        return Task.FromResult<T?>(item);
     }
 
     public virtual Task<IEnumerable<T>> QueryAsync(Func<T, bool> query)

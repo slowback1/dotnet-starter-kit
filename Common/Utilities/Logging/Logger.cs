@@ -23,8 +23,8 @@ public class Logger
     }
 
     private List<ILoggingEngine> LoggingEngines { get; }
-    private Action UnsubscribeFromAllMessages { get; set; }
-    private Action UnsubscribeFromDefaultLoggingMessage { get; set; }
+    private Action UnsubscribeFromAllMessages { get; set; } = () => { };
+    private Action UnsubscribeFromDefaultLoggingMessage { get; set; } = () => { };
 
     public static void EnableLogging(List<ILoggingEngine> loggingEngines, string? defaultLoggingMessage = null)
     {

@@ -46,7 +46,7 @@ public class TimeProviderTests
     [Test]
     public void TestFromString_NullString()
     {
-        Assert.Throws<ArgumentNullException>(() => _timeProvider.FromString(null));
+        Assert.Throws<ArgumentNullException>(() => _timeProvider.FromString(null!));
     }
 
     [Test]

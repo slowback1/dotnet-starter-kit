@@ -8,10 +8,11 @@ public class TestMessageBusListener : MessageBusListener<string>
     {
     }
 
-    public string LastMessage { get; private set; }
+    public string LastMessage { get; private set; } = string.Empty;
 
-    public override async Task OnMessage(string message)
+    public override Task OnMessage(string message)
     {
         LastMessage = message;
+        return Task.CompletedTask;
     }
 }

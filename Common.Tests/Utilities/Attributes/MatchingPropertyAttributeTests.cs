@@ -5,8 +5,8 @@ namespace Common.Tests.Utilities.Attributes;
 
 public class MatchingPropertyTestClass
 {
-    public string A { get; set; }
-    public string B { get; set; }
+    public string A { get; set; } = string.Empty;
+    public string B { get; set; } = string.Empty;
 }
 
 public class MatchingPropertyAttributeTests

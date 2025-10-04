@@ -13,7 +13,7 @@ public class GetExampleDataUseCase
         _crud = crud;
     }
 
-    public async Task<UseCaseResult<ExampleData>> Execute()
+    public Task<UseCaseResult<ExampleData>> Execute()
     {
         var data = new ExampleData
         {
@@ -22,6 +22,6 @@ public class GetExampleDataUseCase
             Value = 42
         };
 
-        return UseCaseResult<ExampleData>.Success(data);
+        return Task.FromResult(UseCaseResult<ExampleData>.Success(data));
     }
 }

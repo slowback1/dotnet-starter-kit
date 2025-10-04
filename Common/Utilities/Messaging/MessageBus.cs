@@ -56,24 +56,24 @@ public static class MessageBus
 
         if (!_subscribers.TryGetValue(message, out var actions)) return;
 
-        foreach (var action in actions) action.Action(payload);
+        foreach (var action in actions) action.Action(payload!);
     }
 
     private static void TryPublishMessage<T>(Func<object, Task> action, T payload)
     {
         try
         {
-            action(payload);
+            action(payload!);
         }
         catch
         {
-            action(null);
+            action(default(T)!);
         }
     }
 
     private static void AddToDictionary<T>(string message, T payload)
     {
-        _lastMessages[message] = payload;
+        _lastMessages[message] = payload!;
     }
 
     public static async Task PublishAsync<T>(string message, T payload)
@@ -83,10 +83,10 @@ public static class MessageBus
 
         if (!_subscribers.TryGetValue(message, out var actions)) return;
 
-        foreach (var action in actions) await Task.Run(() => action.Action(payload));
+        foreach (var action in actions) await Task.Run(() => action.Action(payload!));
     }
 
-    public static T GetLastMessage<T>(string message)
+    public static T? GetLastMessage<T>(string message)
     {
         return _lastMessages.ContainsKey(message) ? (T)_lastMessages[message] : default;
     }

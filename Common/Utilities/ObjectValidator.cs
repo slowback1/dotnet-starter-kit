@@ -12,6 +12,8 @@ public static class ObjectValidator
     {
         if (ShouldSkipValidating(input)) return new List<string>();
 
+        if (input == null) return new List<string>();
+
         var propertiesToValidate =
             GetValidationAttributesFromProperties(input).Concat(GetValidationAttributesFromClass(input));
 
@@ -95,7 +97,7 @@ public static class ObjectValidator
 
     private class PropertyAttributeValuePair
     {
-        public IEnumerable<ValidationAttribute> CustomAttributes { get; set; }
+        public IEnumerable<ValidationAttribute> CustomAttributes { get; set; } = Enumerable.Empty<ValidationAttribute>();
         public object? Value { get; set; }
     }
 }

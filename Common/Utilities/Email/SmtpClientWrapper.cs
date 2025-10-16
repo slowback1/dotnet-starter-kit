@@ -3,14 +3,9 @@ using System.Net.Mail;
 
 namespace Common.Utilities.Email;
 
-public class SmtpClientWrapper : ISmtpClient
+public class SmtpClientWrapper(string host) : ISmtpClient
 {
-    private readonly SmtpClient _client;
-
-    public SmtpClientWrapper(string host)
-    {
-        _client = new SmtpClient(host);
-    }
+    private readonly SmtpClient _client = new(host);
 
     public ICredentialsByHost Credentials
     {

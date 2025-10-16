@@ -104,17 +104,10 @@ public class UniqueListValueAttributeTests
         Assert.That(result, Is.EqualTo("YOU DONE MESSED UP!!!"));
     }
 
-    private class TestUniqueListValue
+    private class TestUniqueListValue(bool boolValue, string stringValue, int intValue)
     {
-        public TestUniqueListValue(bool boolValue, string stringValue, int intValue)
-        {
-            BoolValue = boolValue;
-            StringValue = stringValue;
-            IntValue = intValue;
-        }
-
-        public bool BoolValue { get; set; }
-        public string StringValue { get; set; }
-        public int IntValue { get; set; }
+        public bool BoolValue { get; set; } = boolValue;
+        public string StringValue { get; set; } = stringValue;
+        public int IntValue { get; set; } = intValue;
     }
 }

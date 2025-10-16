@@ -5,15 +5,8 @@ using Common.Utilities.Messaging;
 
 namespace Common.Utilities.Email;
 
-public class MailService : MessageBusListener<MailMessage>
+public class MailService(IMailer mailer) : MessageBusListener<MailMessage>(Messages.SendEmail)
 {
-    private readonly IMailer _mailer;
-
-    public MailService(IMailer mailer) : base(Messages.SendEmail)
-    {
-        _mailer = mailer;
-    }
-
     public override Task OnMessage(MailMessage message)
     {
         TrySendMessage(message);
@@ -25,7 +18,7 @@ public class MailService : MessageBusListener<MailMessage>
     {
         try
         {
-            _mailer.Send(message);
+            mailer.Send(message);
         }
         catch (SmtpException)
         {

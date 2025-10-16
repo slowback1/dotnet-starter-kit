@@ -6,17 +6,8 @@ using System.Text;
 
 namespace Common.Utilities.Attributes;
 
-public class LengthAttribute : ValidationAttribute
+public class LengthAttribute(int max = int.MaxValue, int min = 0) : ValidationAttribute
 {
-    private readonly int _max;
-    private readonly int _min;
-
-    public LengthAttribute(int max = int.MaxValue, int min = 0)
-    {
-        _max = max;
-        _min = min;
-    }
-
     public override string? CheckForValidationError(object? value)
     {
         if (value is null) return null;
@@ -26,10 +17,10 @@ public class LengthAttribute : ValidationAttribute
         var length = GetLengthOfObject(value);
         var stringValue = GetStringValueOfObject(value);
 
-        if (length > _max)
-            return $"{stringValue} is longer than {_max} {GetCountSuffix(value)}.";
-        if (length < _min)
-            return $"{stringValue} is shorter than {_min} {GetCountSuffix(value)}.";
+        if (length > max)
+            return $"{stringValue} is longer than {max} {GetCountSuffix(value)}.";
+        if (length < min)
+            return $"{stringValue} is shorter than {min} {GetCountSuffix(value)}.";
 
         return null;
     }
@@ -59,7 +50,7 @@ public class LengthAttribute : ValidationAttribute
         if (IsString(value))
             return $"'{value}'";
 
-        return BuildIEnumerableToString(value as IEnumerable<object> ?? Array.Empty<object>());
+        return BuildIEnumerableToString(value as IEnumerable<object> ?? []);
     }
 
     private string BuildIEnumerableToString(IEnumerable<object> value)

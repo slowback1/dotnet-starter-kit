@@ -6,18 +6,11 @@ using Common.Models;
 
 namespace Logic.FeatureFlags;
 
-public class DictionaryFeatureFlagProvider : IFeatureFlagProvider
+public class DictionaryFeatureFlagProvider(Dictionary<string, bool> featureFlags) : IFeatureFlagProvider
 {
-    private readonly Dictionary<string, bool> _featureFlags;
-
-    public DictionaryFeatureFlagProvider(Dictionary<string, bool> featureFlags)
-    {
-        _featureFlags = featureFlags;
-    }
-
     public Task<IEnumerable<FeatureFlag>> GetFeatureFlags()
     {
-        return Task.FromResult(_featureFlags.Select(kvp => new FeatureFlag
+        return Task.FromResult(featureFlags.Select(kvp => new FeatureFlag
         {
             Name = kvp.Key,
             IsEnabled = kvp.Value

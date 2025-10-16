@@ -5,16 +5,13 @@ namespace WebAPI.Controllers;
 
 public class HealthCheckResult
 {
-    public string Status { get; set; } = string.Empty;
+    public string Status { get; init; } = string.Empty;
     public DateTime ResponseDate { get; set; } = DateTime.Now;
 }
 
 [Route("HealthCheck")]
-public class HealthCheckController : ApplicationController
+public class HealthCheckController(ICrudFactory factory) : ApplicationController(factory)
 {
-    public HealthCheckController(ICrudFactory factory) : base(factory)
-    {
-    }
 
     [HttpGet]
     [Route("")]

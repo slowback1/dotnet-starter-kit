@@ -32,8 +32,7 @@ public class ValidGuidAttributeTests
     [Test]
     public void ReturnsValidationErrorForPropertyForInvalidGuid()
     {
-        var attr = new ValidGuidAttribute();
-        attr.PropertyName = "Id";
+        var attr = new ValidGuidAttribute() { PropertyName = "Id" };
 
         var result = attr.CheckForValidationError("asdf");
 

@@ -5,78 +5,71 @@ using System.Reflection;
 
 namespace Common.Utilities.Attributes;
 
-public class UniqueListValueAttribute : ValidationAttribute
+public class UniqueListValueAttribute(string propertyName, string? errorMessage = null) : ValidationAttribute
 {
-    private readonly string? _errorMessage;
-    private readonly string _propertyName;
+	public override string? CheckForValidationError(object? value)
+	{
+		var enumerable = value as IEnumerable<object>;
 
-    public UniqueListValueAttribute(string propertyName, string? errorMessage = null)
-    {
-        _propertyName = propertyName;
-        _errorMessage = errorMessage;
-    }
+		var array = enumerable as object[] ?? enumerable?.ToArray() ?? [];
+		if (enumerable is null || !array.Any())
+			return null;
 
-    public override string? CheckForValidationError(object? value)
-    {
-        var enumerable = value as IEnumerable<object>;
+		var objects = array.ToList();
 
-        if (enumerable is null || !enumerable.Any())
-            return null;
+		var hasDuplicates = CheckIfListHasDuplicates(objects);
 
-        var objects = enumerable.ToList();
+		if (hasDuplicates)
+			return ErrorResult();
 
-        var hasDuplicates = CheckIfListHasDuplicates(objects);
+		return null;
+	}
 
-        if (hasDuplicates)
-            return ErrorResult();
+	private bool CheckIfListHasDuplicates(List<object> enumerable)
+	{
+		var values = GetPropertyValues(enumerable);
 
-        return null;
-    }
+		var array = values as object[] ?? values.ToArray();
+		var hasDuplicates = array.GroupBy(v => v).Count() != array.Length;
+		return hasDuplicates;
+	}
 
-    private bool CheckIfListHasDuplicates(List<object> enumerable)
-    {
-        var values = GetPropertyValues(enumerable);
+	private string ErrorResult()
+	{
+		if (errorMessage != null)
+			return errorMessage;
 
-        var hasDuplicates = values.GroupBy(v => v).Count() != values.Count();
-        return hasDuplicates;
-    }
+		return $"Non-unique values found for {propertyName}";
+	}
 
-    private string ErrorResult()
-    {
-        if (_errorMessage != null)
-            return _errorMessage;
+	private IEnumerable<object?> GetPropertyValues(List<object> enumerable)
+	{
+		var objectType = GetListType(enumerable);
+		var propertyType = GetPropertyType(objectType);
 
-        return $"Non-unique values found for {_propertyName}";
-    }
+		var values = enumerable.Select(obj => GetValueForProperty(obj, propertyType));
+		return values;
+	}
 
-    private IEnumerable<object?> GetPropertyValues(List<object> enumerable)
-    {
-        var objectType = GetListType(enumerable);
-        var propertyType = GetPropertyType(objectType);
+	private object? GetValueForProperty(object obj, PropertyInfo propertyValue)
+	{
+		return propertyValue.GetValue(obj);
+	}
 
-        var values = enumerable.Select(obj => GetValueForProperty(obj, propertyType));
-        return values;
-    }
+	private PropertyInfo GetPropertyType(Type objectType)
+	{
+		var property = objectType.GetProperty(propertyName);
 
-    private object? GetValueForProperty(object obj, PropertyInfo propertyValue)
-    {
-        return propertyValue.GetValue(obj);
-    }
+		if (property is null)
+			throw new InvalidOperationException($"Property Name {propertyName} is invalid!");
 
-    private PropertyInfo GetPropertyType(Type objectType)
-    {
-        var property = objectType.GetProperty(_propertyName);
+		return property;
+	}
 
-        if (property is null)
-            throw new InvalidOperationException($"Property Name {_propertyName} is invalid!");
+	private Type GetListType(IEnumerable<object> list)
+	{
+		var first = list.First();
 
-        return property;
-    }
-
-    private Type GetListType(IEnumerable<object> list)
-    {
-        var first = list.First();
-
-        return first.GetType();
-    }
+		return first.GetType();
+	}
 }

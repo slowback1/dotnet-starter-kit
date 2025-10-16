@@ -7,16 +7,9 @@ using Logic.User;
 
 namespace Logic.Authorization;
 
-public class UserAuthorizationUseCase
+public class UserAuthorizationUseCase(ICrudFactory crudFactory, TokenGeneratorConfig tokenGeneratorConfig)
 {
-    private readonly ICrudFactory _crudFactory;
-    private readonly ITokenHandler _tokenHandler;
-
-    public UserAuthorizationUseCase(ICrudFactory crudFactory, TokenGeneratorConfig tokenGeneratorConfig)
-    {
-        _crudFactory = crudFactory;
-        _tokenHandler = new TokenHandler(tokenGeneratorConfig);
-    }
+    private readonly ITokenHandler _tokenHandler = new TokenHandler(tokenGeneratorConfig);
 
     public async Task<UseCaseResult<AuthorizationResult>> AuthorizeAsync(string token)
     {
@@ -52,7 +45,7 @@ public class UserAuthorizationUseCase
             return UseCaseResult<AuthorizationResult>.Success(result);
         }
 
-        var userCrud = _crudFactory.GetCrud<AppUser>();
+        var userCrud = crudFactory.GetCrud<AppUser>();
         var user = await userCrud.GetByQueryAsync(u => u.Name == userFromToken.Name);
         if (user == null)
         {

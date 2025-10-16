@@ -148,7 +148,7 @@ tasks:
     desc: Run code analysis and linting using ReSharper CLI
     cmds:
       - dotnet tool restore
-      - dotnet jb inspectcode {{.SOLUTION_FILE}} -o=inspection-results.json
+      - dotnet jb inspectcode {{.SOLUTION_FILE}} -o=inspection-results.json -e=WARNING
       - cat inspection-results.json
       - echo "Linting completed. Check inspection-results.json for details."
   

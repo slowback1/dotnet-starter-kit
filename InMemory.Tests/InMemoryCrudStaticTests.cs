@@ -4,13 +4,13 @@ namespace InMemory.Tests;
 
 public class TestEntityA : IIdentifyable
 {
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; init; } = string.Empty;
     public string Id { get; set; } = string.Empty;
 }
 
 public class TestEntityB : IIdentifyable
 {
-    public int Value { get; set; }
+    public int Value { get; init; }
     public string Id { get; set; } = string.Empty;
 }
 

@@ -149,8 +149,7 @@ tasks:
     cmds:
       - dotnet tool restore
       - dotnet jb inspectcode {{.SOLUTION_FILE}} -o=inspection-results.json -e=WARNING
-      - cat inspection-results.json
-      - echo "Linting completed. Check inspection-results.json for details."
+      - sh ./scripts/check-lint-results.sh
   
   lint-fix:
     desc: Automatically fix linting issues where possible using ReSharper CLI
@@ -162,6 +161,7 @@ tasks:
   precommit:
     desc: Run tasks before committing code
     cmds:
-      - task: build
       - task: lint-fix
+      - task: build
       - task: test
+      - task: lint

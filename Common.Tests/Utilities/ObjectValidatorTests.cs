@@ -103,7 +103,7 @@ public class ObjectValidatorTests
     [Test]
     public void CanGetValidationErrorsFromChildObjectsInAList()
     {
-        var test = new ParentList { Children = new List<Child> { new() { Value = "A" } } };
+        var test = new ParentList { Children = [new() { Value = "A" }] };
 
         var result = ObjectValidator.ValidateObject(test);
 

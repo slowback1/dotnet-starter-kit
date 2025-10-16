@@ -50,7 +50,7 @@ public class LengthAttribute(int max = int.MaxValue, int min = 0) : ValidationAt
         if (IsString(value))
             return $"'{value}'";
 
-        return BuildIEnumerableToString(value as IEnumerable<object> ?? Array.Empty<object>());
+        return BuildIEnumerableToString(value as IEnumerable<object> ?? []);
     }
 
     private string BuildIEnumerableToString(IEnumerable<object> value)

@@ -6,7 +6,7 @@ namespace WebAPI.Controllers;
 
 public abstract class ApplicationController(ICrudFactory factory) : Controller
 {
-    protected readonly ICrudFactory _factory = factory;
+    protected readonly ICrudFactory Factory = factory;
 
     protected ActionResult ToActionResult<T>(UseCaseResult<T> result)
     {

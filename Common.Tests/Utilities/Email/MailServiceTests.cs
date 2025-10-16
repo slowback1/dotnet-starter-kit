@@ -6,14 +6,14 @@ namespace Common.Tests.Utilities.Email;
 
 public class MailServiceTests
 {
-    private MailService _mailService { get; set; }
-    private TestMailer _mailer { get; set; }
+    private MailService MailService { get; set; }
+    private TestMailer Mailer { get; set; }
 
     [SetUp]
     public void SetUp()
     {
-        _mailer = new TestMailer();
-        _mailService = new MailService(_mailer);
+        Mailer = new TestMailer();
+        MailService = new MailService(Mailer);
     }
 
     [TearDown]
@@ -33,11 +33,11 @@ public class MailServiceTests
             Body = "Body"
         };
 
-        await _mailService.OnMessage(message);
+        await MailService.OnMessage(message);
 
-        Assert.That(_mailer.LastTo, Is.EqualTo("To"));
-        Assert.That(_mailer.LastSubject, Is.EqualTo("Subject"));
-        Assert.That(_mailer.LastBody, Is.EqualTo("Body"));
+        Assert.That(Mailer.LastTo, Is.EqualTo("To"));
+        Assert.That(Mailer.LastSubject, Is.EqualTo("Subject"));
+        Assert.That(Mailer.LastBody, Is.EqualTo("Body"));
     }
 
     [Test]
@@ -52,9 +52,9 @@ public class MailServiceTests
 
         await MessageBus.PublishAsync(Messages.SendEmail, message);
 
-        Assert.That(_mailer.LastTo, Is.EqualTo("To"));
-        Assert.That(_mailer.LastSubject, Is.EqualTo("Subject"));
-        Assert.That(_mailer.LastBody, Is.EqualTo("Body"));
+        Assert.That(Mailer.LastTo, Is.EqualTo("To"));
+        Assert.That(Mailer.LastSubject, Is.EqualTo("Subject"));
+        Assert.That(Mailer.LastBody, Is.EqualTo("Body"));
     }
 
     [Test]
@@ -67,9 +67,9 @@ public class MailServiceTests
             Body = "Body"
         };
 
-        await _mailService.OnMessage(message);
+        await MailService.OnMessage(message);
 
-        Assert.That(_mailer.TimesCalled, Is.EqualTo(3));
+        Assert.That(Mailer.TimesCalled, Is.EqualTo(3));
     }
 
     [Test]
@@ -82,7 +82,7 @@ public class MailServiceTests
             Body = "Body"
         };
 
-        await _mailService.OnMessage(message);
+        await MailService.OnMessage(message);
 
         var lastMessage = MessageBus.GetLastMessage<string>(Messages.LogMessage);
 
@@ -99,9 +99,9 @@ public class MailServiceTests
             Body = null!
         };
 
-        await _mailService.OnMessage(message);
+        await MailService.OnMessage(message);
 
-        Assert.That(_mailer.TimesCalled, Is.EqualTo(1));
+        Assert.That(Mailer.TimesCalled, Is.EqualTo(1));
     }
 
     [Test]
@@ -114,7 +114,7 @@ public class MailServiceTests
             Body = null!
         };
 
-        await _mailService.OnMessage(message);
+        await MailService.OnMessage(message);
 
         var lastMessage = MessageBus.GetLastMessage<string>(Messages.LogMessage);
 

@@ -6,13 +6,13 @@ public class NumericValueAttribute : ValidationAttribute
 {
     protected readonly float Max;
     protected readonly float Min;
-    private readonly string NameOverride;
+    private readonly string _nameOverride;
 
     public NumericValueAttribute(float min = float.MinValue, float max = float.MaxValue, string propertyName = "")
     {
         Min = min;
         Max = max;
-        NameOverride = propertyName;
+        _nameOverride = propertyName;
 
         if (Max < Min)
             throw new ArgumentException("Max value cannot be less than min value");
@@ -59,6 +59,6 @@ public class NumericValueAttribute : ValidationAttribute
 
     private string GetPropertyName()
     {
-        return string.IsNullOrWhiteSpace(NameOverride) ? PropertyName : NameOverride;
+        return string.IsNullOrWhiteSpace(_nameOverride) ? PropertyName : _nameOverride;
     }
 }

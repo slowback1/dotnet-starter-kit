@@ -13,7 +13,7 @@ tasks:
       - dotnet restore {{.SOLUTION_FILE}}
       - task: create-dev-appsettings
       - task: create-dev-appsettings-console
-    
+  
   create-dev-appsettings:
     desc: Create appsettings.Development.json if it doesn't exist
     cmds:
@@ -142,3 +142,18 @@ tasks:
         fi
       - task: clean
       - task: setup
+
+  lint:
+    desc: Run code analysis and linting using ReSharper CLI
+    cmds:
+      - dotnet tool restore
+      - dotnet jb inspectcode {{.SOLUTION_FILE}} -o=inspection-results.json
+      - cat inspection-results.json
+      - echo "Linting completed. Check inspection-results.json for details."
+  
+  lint-fix:
+    desc: Automatically fix linting issues where possible using ReSharper CLI
+    cmds:
+      - dotnet tool restore
+      - dotnet jb cleanupcode {{.SOLUTION_FILE}}
+      - echo "Linting fixes applied where possible."

@@ -8,8 +8,6 @@ namespace Logic.FeatureFlags;
 
 public class FeatureFlagService(IFeatureFlagProvider featureFlagProvider)
 {
-    private readonly IFeatureFlagProvider _featureFlagProvider = featureFlagProvider;
-
     public async Task<bool> FeatureIsEnabled(string featureFlag)
     {
         var featureFlags = (await GetFeatureFlags()).ToList();
@@ -19,7 +17,7 @@ public class FeatureFlagService(IFeatureFlagProvider featureFlagProvider)
 
     private async Task<IEnumerable<FeatureFlag>> GetFeatureFlags()
     {
-        return await _featureFlagProvider.GetFeatureFlags();
+        return await featureFlagProvider.GetFeatureFlags();
     }
 
     private async Task<bool> FeatureExists(IEnumerable<FeatureFlag> featureFlags, string feature)

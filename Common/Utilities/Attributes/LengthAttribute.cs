@@ -8,9 +8,6 @@ namespace Common.Utilities.Attributes;
 
 public class LengthAttribute(int max = int.MaxValue, int min = 0) : ValidationAttribute
 {
-    private readonly int _max = max;
-    private readonly int _min = min;
-
     public override string? CheckForValidationError(object? value)
     {
         if (value is null) return null;
@@ -20,10 +17,10 @@ public class LengthAttribute(int max = int.MaxValue, int min = 0) : ValidationAt
         var length = GetLengthOfObject(value);
         var stringValue = GetStringValueOfObject(value);
 
-        if (length > _max)
-            return $"{stringValue} is longer than {_max} {GetCountSuffix(value)}.";
-        if (length < _min)
-            return $"{stringValue} is shorter than {_min} {GetCountSuffix(value)}.";
+        if (length > max)
+            return $"{stringValue} is longer than {max} {GetCountSuffix(value)}.";
+        if (length < min)
+            return $"{stringValue} is shorter than {min} {GetCountSuffix(value)}.";
 
         return null;
     }

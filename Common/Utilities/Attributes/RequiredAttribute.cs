@@ -2,12 +2,10 @@
 
 public class RequiredAttribute(string? name = null) : ValidationAttribute
 {
-    private readonly string? _name = name;
-
     public override string? CheckForValidationError(object? value)
     {
         if (value is null || IsEmptyString(value))
-            return $"'{_name ?? PropertyName}' is required.";
+            return $"'{name ?? PropertyName}' is required.";
 
         return null;
     }

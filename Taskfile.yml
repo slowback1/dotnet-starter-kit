@@ -13,6 +13,7 @@ tasks:
       - dotnet restore {{.SOLUTION_FILE}}
       - task: create-dev-appsettings
       - task: create-dev-appsettings-console
+      - sh ./scripts/install-pre-commit-hook.sh
   
   create-dev-appsettings:
     desc: Create appsettings.Development.json if it doesn't exist
@@ -157,3 +158,10 @@ tasks:
       - dotnet tool restore
       - dotnet jb cleanupcode {{.SOLUTION_FILE}}
       - echo "Linting fixes applied where possible."
+  
+  precommit:
+    desc: Run tasks before committing code
+    cmds:
+      - task: build
+      - task: lint-fix
+      - task: test

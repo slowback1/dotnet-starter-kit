@@ -5,21 +5,12 @@ using Common.Models;
 
 namespace Logic.User;
 
-public class RegisterUseCase
+public class RegisterUseCase(ICrud<AppUser> userCrud, IPasswordHasher passwordHasher, ITokenHandler tokenHandler)
 {
     private const int DefaultCoins = 500;
-    private readonly IPasswordHasher _passwordHasher;
-    private readonly ITokenHandler _tokenHandler;
-    private readonly ICrud<AppUser> _userCrud;
-
-    public RegisterUseCase(ICrud<AppUser> userCrud,
-        IPasswordHasher passwordHasher,
-        ITokenHandler tokenHandler)
-    {
-        _passwordHasher = passwordHasher;
-        _tokenHandler = tokenHandler;
-        _userCrud = userCrud;
-    }
+    private readonly IPasswordHasher _passwordHasher = passwordHasher;
+    private readonly ITokenHandler _tokenHandler = tokenHandler;
+    private readonly ICrud<AppUser> _userCrud = userCrud;
 
     public async Task<UseCaseResult<UserResponse>> RegisterAsync(RegisterRequest request)
     {

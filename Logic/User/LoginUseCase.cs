@@ -4,18 +4,11 @@ using Common.Models;
 
 namespace Logic.User;
 
-public class LoginUseCase
+public class LoginUseCase(ICrudFactory crudFactory, IPasswordHasher passwordHasher, ITokenHandler tokenHandler)
 {
-    private readonly IPasswordHasher _passwordHasher;
-    private readonly ITokenHandler _tokenHandler;
-    private readonly ICrud<AppUser> _userCrud;
-
-    public LoginUseCase(ICrudFactory crudFactory, IPasswordHasher passwordHasher, ITokenHandler tokenHandler)
-    {
-        _userCrud = crudFactory.GetCrud<AppUser>();
-        _passwordHasher = passwordHasher;
-        _tokenHandler = tokenHandler;
-    }
+    private readonly IPasswordHasher _passwordHasher = passwordHasher;
+    private readonly ITokenHandler _tokenHandler = tokenHandler;
+    private readonly ICrud<AppUser> _userCrud = crudFactory.GetCrud<AppUser>();
 
     public async Task<UseCaseResult<UserResponse>> LoginAsync(LoginRequest request)
     {

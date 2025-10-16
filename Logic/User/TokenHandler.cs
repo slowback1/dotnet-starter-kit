@@ -9,14 +9,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Logic.User;
 
-public class TokenHandler : ITokenHandler
+public class TokenHandler(TokenGeneratorConfig config) : ITokenHandler
 {
-    private readonly TokenGeneratorConfig _config;
-
-    public TokenHandler(TokenGeneratorConfig config)
-    {
-        _config = config;
-    }
+    private readonly TokenGeneratorConfig _config = config;
 
     public string GenerateToken(AppUser user)
     {

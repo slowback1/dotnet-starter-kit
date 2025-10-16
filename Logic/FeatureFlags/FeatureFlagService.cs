@@ -6,14 +6,9 @@ using Common.Models;
 
 namespace Logic.FeatureFlags;
 
-public class FeatureFlagService
+public class FeatureFlagService(IFeatureFlagProvider featureFlagProvider)
 {
-    private readonly IFeatureFlagProvider _featureFlagProvider;
-
-    public FeatureFlagService(IFeatureFlagProvider featureFlagProvider)
-    {
-        _featureFlagProvider = featureFlagProvider;
-    }
+    private readonly IFeatureFlagProvider _featureFlagProvider = featureFlagProvider;
 
     public async Task<bool> FeatureIsEnabled(string featureFlag)
     {

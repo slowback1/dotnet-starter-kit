@@ -7,16 +7,10 @@ using Logic.User;
 
 namespace Logic.Authorization;
 
-public class UserAuthorizationUseCase
+public class UserAuthorizationUseCase(ICrudFactory crudFactory, TokenGeneratorConfig tokenGeneratorConfig)
 {
-    private readonly ICrudFactory _crudFactory;
-    private readonly ITokenHandler _tokenHandler;
-
-    public UserAuthorizationUseCase(ICrudFactory crudFactory, TokenGeneratorConfig tokenGeneratorConfig)
-    {
-        _crudFactory = crudFactory;
-        _tokenHandler = new TokenHandler(tokenGeneratorConfig);
-    }
+    private readonly ICrudFactory _crudFactory = crudFactory;
+    private readonly ITokenHandler _tokenHandler = new TokenHandler(tokenGeneratorConfig);
 
     public async Task<UseCaseResult<AuthorizationResult>> AuthorizeAsync(string token)
     {

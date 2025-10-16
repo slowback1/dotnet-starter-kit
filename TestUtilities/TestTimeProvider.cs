@@ -3,14 +3,9 @@ using Common.Interfaces;
 
 namespace TestUtilities;
 
-public class TestTimeProvider : ITimeProvider
+public class TestTimeProvider(DateTime now) : ITimeProvider
 {
-    private readonly DateTime _now;
-
-    public TestTimeProvider(DateTime now)
-    {
-        _now = now;
-    }
+    private readonly DateTime _now = now;
 
     public DateTime Now()
     {

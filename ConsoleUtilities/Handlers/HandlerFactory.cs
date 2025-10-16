@@ -2,17 +2,12 @@ using Common.Interfaces;
 
 namespace ConsoleUtilities.Handlers;
 
-public class HandlerFactory
+public class HandlerFactory(ICrudFactory crudFactory)
 {
-    private readonly List<BaseHandler> _handlers;
-
-    public HandlerFactory(ICrudFactory crudFactory)
-    {
-        _handlers = new List<BaseHandler>
-        {
-            new GetExampleDataHandler(crudFactory)
-        };
-    }
+    private readonly List<BaseHandler> _handlers =
+    [
+        new GetExampleDataHandler(crudFactory)
+    ];
 
     public IHandler GetHandler(string handlerName)
     {

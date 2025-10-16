@@ -1,6 +1,7 @@
 # .NET Starter Kit
 
-A starter kit for .NET projects with a clean architecture approach, including multiple data persistence options (InMemory and FileData), comprehensive testing, and automated build tasks.
+A starter kit for .NET projects with a clean architecture approach, including multiple data persistence options (
+InMemory and FileData), comprehensive testing, and automated build tasks.
 
 ## Prerequisites
 
@@ -35,6 +36,7 @@ A starter kit for .NET projects with a clean architecture approach, including mu
 ## Available Tasks
 
 You can see all available tasks by running:
+
 ```bash
 task --list
 ```
@@ -47,6 +49,8 @@ task --list
 - **`task run`** - Run the WebAPI project
 - **`task run-dev`** - Run the WebAPI with Development environment
 - **`task clean`** - Clean build artifacts
+- **`task lint`** - Run code analysis
+- **`task lint-fix`** - Fix code style issues automatically
 
 ### Additional Tasks
 
@@ -86,6 +90,7 @@ The application supports different data persistence modes via `appsettings.json`
 - **FileData**: Data persisted to local JSON files
 
 Example configuration in `appsettings.Development.json`:
+
 ```json
 {
   "CrudFactory": {

@@ -5,7 +5,7 @@ namespace WebAPI.Controllers;
 
 public class HealthCheckResult
 {
-    public string Status { get; set; } = string.Empty;
+    public string Status { get; init; } = string.Empty;
     public DateTime ResponseDate { get; set; } = DateTime.Now;
 }
 

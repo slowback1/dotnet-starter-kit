@@ -4,7 +4,7 @@ namespace Common.Tests.Utilities.Messaging;
 
 public class TestMessage
 {
-    public string Message { get; set; } = string.Empty;
+    public string Message { get; init; } = string.Empty;
     public int Value { get; set; }
 }
 

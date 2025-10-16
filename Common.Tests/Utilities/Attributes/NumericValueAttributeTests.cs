@@ -29,8 +29,7 @@ public class NumericValueAttributeTests
     [Test]
     public void CheckForValidationError_WhenCalledWithANumberBelowMin_ShouldReturnAnErrorMessage()
     {
-        var attribute = new NumericValueAttribute(5);
-        attribute.PropertyName = "MyNumericProperty";
+        var attribute = new NumericValueAttribute(5) { PropertyName = "MyNumericProperty" };
 
         var value = 4;
 
@@ -42,8 +41,7 @@ public class NumericValueAttributeTests
     [Test]
     public void CheckForValidationError_WhenCalledWithANumberAboveMax_ShouldReturnAnErrorMessage()
     {
-        var attribute = new NumericValueAttribute(max: 5);
-        attribute.PropertyName = "MyNumericProperty";
+        var attribute = new NumericValueAttribute(max: 5) { PropertyName = "MyNumericProperty" };
         var value = 6;
 
         var result = attribute.CheckForValidationError(value);
@@ -54,8 +52,7 @@ public class NumericValueAttributeTests
     [Test]
     public void CheckForValidationError_WhenCalledWithANumberEqualToMax_ShouldReturnNull()
     {
-        var attribute = new NumericValueAttribute(max: 5);
-        attribute.PropertyName = "MyNumericProperty";
+        var attribute = new NumericValueAttribute(max: 5) { PropertyName = "MyNumericProperty" };
         var value = 5;
 
         var result = attribute.CheckForValidationError(value);
@@ -66,8 +63,7 @@ public class NumericValueAttributeTests
     [Test]
     public void CheckForValidationError_WhenCalledWithANumberEqualToMin_ShouldReturnNull()
     {
-        var attribute = new NumericValueAttribute(5);
-        attribute.PropertyName = "MyNumericProperty";
+        var attribute = new NumericValueAttribute(5) { PropertyName = "MyNumericProperty" };
         var value = 5;
 
         var result = attribute.CheckForValidationError(value);
@@ -117,8 +113,7 @@ public class NumericValueAttributeTests
     [Test]
     public void CanCustomizeThePropertyNameInTheErrorMessage()
     {
-        var attribute = new NumericValueAttribute(1L, 10000L, "My Prettified Name");
-        attribute.PropertyName = "MyProperty";
+        var attribute = new NumericValueAttribute(1L, 10000L, "My Prettified Name") { PropertyName = "MyProperty" };
         var value = 0L;
 
         var result = attribute.CheckForValidationError(value);

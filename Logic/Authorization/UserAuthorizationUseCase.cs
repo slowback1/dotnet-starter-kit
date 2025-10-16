@@ -9,7 +9,6 @@ namespace Logic.Authorization;
 
 public class UserAuthorizationUseCase(ICrudFactory crudFactory, TokenGeneratorConfig tokenGeneratorConfig)
 {
-    private readonly ICrudFactory _crudFactory = crudFactory;
     private readonly ITokenHandler _tokenHandler = new TokenHandler(tokenGeneratorConfig);
 
     public async Task<UseCaseResult<AuthorizationResult>> AuthorizeAsync(string token)
@@ -46,7 +45,7 @@ public class UserAuthorizationUseCase(ICrudFactory crudFactory, TokenGeneratorCo
             return UseCaseResult<AuthorizationResult>.Success(result);
         }
 
-        var userCrud = _crudFactory.GetCrud<AppUser>();
+        var userCrud = crudFactory.GetCrud<AppUser>();
         var user = await userCrud.GetByQueryAsync(u => u.Name == userFromToken.Name);
         if (user == null)
         {

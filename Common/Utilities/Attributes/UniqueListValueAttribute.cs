@@ -7,9 +7,6 @@ namespace Common.Utilities.Attributes;
 
 public class UniqueListValueAttribute(string propertyName, string? errorMessage = null) : ValidationAttribute
 {
-    private readonly string? _errorMessage = errorMessage;
-    private readonly string _propertyName = propertyName;
-
     public override string? CheckForValidationError(object? value)
     {
         var enumerable = value as IEnumerable<object>;
@@ -37,10 +34,10 @@ public class UniqueListValueAttribute(string propertyName, string? errorMessage 
 
     private string ErrorResult()
     {
-        if (_errorMessage != null)
-            return _errorMessage;
+        if (errorMessage != null)
+            return errorMessage;
 
-        return $"Non-unique values found for {_propertyName}";
+        return $"Non-unique values found for {propertyName}";
     }
 
     private IEnumerable<object?> GetPropertyValues(List<object> enumerable)
@@ -59,10 +56,10 @@ public class UniqueListValueAttribute(string propertyName, string? errorMessage 
 
     private PropertyInfo GetPropertyType(Type objectType)
     {
-        var property = objectType.GetProperty(_propertyName);
+        var property = objectType.GetProperty(propertyName);
 
         if (property is null)
-            throw new InvalidOperationException($"Property Name {_propertyName} is invalid!");
+            throw new InvalidOperationException($"Property Name {propertyName} is invalid!");
 
         return property;
     }

@@ -5,7 +5,6 @@ namespace ConsoleUtilities;
 public class ConsoleMenu(HandlerFactory handlerFactory)
 {
     private const int MaxItemsPerPage = 5;
-    private readonly HandlerFactory _handlerFactory = handlerFactory;
 
     public void ShowMenu()
     {
@@ -13,7 +12,7 @@ public class ConsoleMenu(HandlerFactory handlerFactory)
         {
             Console.Clear();
             Console.WriteLine("Select an option:");
-            var options = _handlerFactory.GetHandlerOptions();
+            var options = handlerFactory.GetHandlerOptions();
             DisplayOptionsWithPaging(options);
             Console.WriteLine("0. Exit");
 
@@ -52,7 +51,7 @@ public class ConsoleMenu(HandlerFactory handlerFactory)
         if (choice <= 0 || choice > options.Count)
             return false;
         var handlerName = options[choice - 1].Split(" - ")[0];
-        var handler = _handlerFactory.GetHandler(handlerName);
+        var handler = handlerFactory.GetHandler(handlerName);
         Console.WriteLine($"You selected: {handlerName}");
         Console.WriteLine("Enter arguments separated by spaces:");
         var argsInput = Console.ReadLine();

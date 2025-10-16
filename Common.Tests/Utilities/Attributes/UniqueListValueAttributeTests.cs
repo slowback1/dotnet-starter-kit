@@ -1,5 +1,4 @@
-﻿
-using Common.Utilities.Attributes;
+﻿using Common.Utilities.Attributes;
 
 namespace Common.Tests.Utilities.Attributes;
 
@@ -19,8 +18,13 @@ public class UniqueListValueAttributeTests
     [TestCase(nameof(TestUniqueListValue.BoolValue), false, "", 0, false, "", 0)]
     [TestCase(nameof(TestUniqueListValue.StringValue), false, "test", 0, false, "test", 1)]
     [TestCase(nameof(TestUniqueListValue.IntValue), false, "", 123, false, "", 123)]
-    public void ReturnsAnErrorMessageWhenGivenTwoNonUniqueValues(string propertyName, bool firstB, string firstC,
-        int firstD, bool secondB, string secondC, int secondD)
+    public void ReturnsAnErrorMessageWhenGivenTwoNonUniqueValues(string propertyName,
+        bool firstB,
+        string firstC,
+        int firstD,
+        bool secondB,
+        string secondC,
+        int secondD)
     {
         var list = new List<TestUniqueListValue>
         {
@@ -40,8 +44,13 @@ public class UniqueListValueAttributeTests
     [TestCase(nameof(TestUniqueListValue.BoolValue), false, "", 0, true, "", 0)]
     [TestCase(nameof(TestUniqueListValue.StringValue), false, "test", 0, false, "test 2", 1)]
     [TestCase(nameof(TestUniqueListValue.IntValue), false, "", 123, false, "", 1234)]
-    public void DoesNotReturnAnErrorMessageWhenAllOfTheValuesAreUnique(string propertyName, bool firstB, string firstC,
-        int firstD, bool secondB, string secondC, int secondD)
+    public void DoesNotReturnAnErrorMessageWhenAllOfTheValuesAreUnique(string propertyName,
+        bool firstB,
+        string firstC,
+        int firstD,
+        bool secondB,
+        string secondC,
+        int secondD)
     {
         var list = new List<TestUniqueListValue>
         {

@@ -26,7 +26,6 @@ public static class ObjectValidator
     {
         if (input is null || input is string) return true;
 
-
         return false;
     }
 
@@ -97,7 +96,9 @@ public static class ObjectValidator
 
     private class PropertyAttributeValuePair
     {
-        public IEnumerable<ValidationAttribute> CustomAttributes { get; set; } = Enumerable.Empty<ValidationAttribute>();
+        public IEnumerable<ValidationAttribute> CustomAttributes { get; set; } =
+            Enumerable.Empty<ValidationAttribute>();
+
         public object? Value { get; set; }
     }
 }

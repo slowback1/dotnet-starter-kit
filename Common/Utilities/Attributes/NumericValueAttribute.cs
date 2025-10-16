@@ -8,7 +8,6 @@ public class NumericValueAttribute : ValidationAttribute
     protected readonly float Min;
     private readonly string NameOverride;
 
-
     public NumericValueAttribute(float min = float.MinValue, float max = float.MaxValue, string propertyName = "")
     {
         Min = min;
@@ -28,7 +27,8 @@ public class NumericValueAttribute : ValidationAttribute
     {
     }
 
-    public NumericValueAttribute(decimal min = decimal.MinValue, decimal max = decimal.MaxValue,
+    public NumericValueAttribute(decimal min = decimal.MinValue,
+        decimal max = decimal.MaxValue,
         string propertyName = "")
         : this((float)min, (float)max, propertyName)
     {

@@ -40,7 +40,6 @@ public class MessageBusListenerTests
 
         var message = 69;
 
-
         await MessageBus.PublishAsync("static_listener_test", message);
 
         Assert.That(TestStaticMessageBusListener.Instance.LastMessage, Is.EqualTo(message));

@@ -16,8 +16,7 @@ public class ValidGuidAttribute : ValidationAttribute
 
     private string? CheckStringForGuidValidity(string value)
     {
-        var isValidGuid = Guid.TryParse(value, out var _);
-
+        var isValidGuid = Guid.TryParse(value, out _);
 
         return isValidGuid ? null : $"'{PropertyName}' is not a valid Globally Unique ID.";
     }

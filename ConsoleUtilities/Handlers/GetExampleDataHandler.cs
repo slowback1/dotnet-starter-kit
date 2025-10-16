@@ -15,10 +15,7 @@ public class GetExampleDataHandler : BaseHandler
         var useCase = new GetExampleDataUseCase(CrudFactory.GetCrud<ExampleData>());
         var data = await useCase.Execute();
 
-        if (data.Result != null)
-        {
-            Console.WriteLine($"{data.Result.Id} | {data.Result.Name} | {data.Result.Value}");
-        }
+        if (data.Result != null) Console.WriteLine($"{data.Result.Id} | {data.Result.Name} | {data.Result.Value}");
     }
 
     public override string GetHelpMessage()

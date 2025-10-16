@@ -6,7 +6,10 @@ namespace Common.Models;
 public class AppUser : IIdentifyable
 {
     public string Name { get; set; } = string.Empty;
-    [JsonIgnore] public string? Password { get; set; }
+
+    [JsonIgnore]
+    public string? Password { get; set; }
+
     public string Id { get; set; } = string.Empty;
 }
 

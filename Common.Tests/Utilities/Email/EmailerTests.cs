@@ -7,7 +7,7 @@ namespace Common.Tests.Utilities.Email;
 public class MockSmtpClient : ISmtpClient
 {
     public List<MailMessage> SentMessages { get; } = new();
-    public ICredentialsByHost Credentials { get; set; }
+    public ICredentialsByHost Credentials { get; set; } = new CredentialCache();
     public bool EnableSsl { get; set; }
 
     public void Send(MailMessage message)

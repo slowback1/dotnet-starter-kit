@@ -98,7 +98,8 @@ public abstract class ControllerTestBase : IDisposable
         return await Client.SendAsync(request);
     }
 
-    protected async Task<HttpResponseMessage> PostRawAsync<TRequest>(string url, TRequest body,
+    protected async Task<HttpResponseMessage> PostRawAsync<TRequest>(string url,
+        TRequest body,
         bool includeToken = true)
     {
         var request = new HttpRequestMessage(HttpMethod.Post, url)

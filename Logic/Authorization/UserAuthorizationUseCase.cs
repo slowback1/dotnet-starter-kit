@@ -75,7 +75,6 @@ public class UserAuthorizationUseCase
         var lowerHeaders = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         foreach (var header in headers) lowerHeaders[header.Key.ToLower()] = header.Value;
 
-
         if (!lowerHeaders.TryGetValue("x-user-token", out var token) || string.IsNullOrWhiteSpace(token))
             return string.Empty;
         return token;

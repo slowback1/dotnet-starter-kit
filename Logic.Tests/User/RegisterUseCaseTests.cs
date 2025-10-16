@@ -42,8 +42,10 @@ public class RegisterUseCaseTests
     [TestCase("ValidUser", "password", "password", "Password must contain at least one uppercase letter")]
     [TestCase("ValidUser", "PASSWORD", "PASSWORD", "Password must contain at least one lowercase letter")]
     [TestCase("ValidUser", "Password1", "Password2", "Passwords do not match")]
-    public async Task RegisterAsync_ShouldReturnError_WhenValidationFails(string name, string password,
-        string confirmPassword, string expectedError)
+    public async Task RegisterAsync_ShouldReturnError_WhenValidationFails(string name,
+        string password,
+        string confirmPassword,
+        string expectedError)
     {
         var request = new RegisterRequest { Name = name, Password = password, ConfirmPassword = confirmPassword };
         var result = await _registerUseCase.RegisterAsync(request);

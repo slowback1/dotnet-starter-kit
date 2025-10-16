@@ -66,7 +66,7 @@ public class LengthAttribute : ValidationAttribute
     {
         var stringBuilder = new StringBuilder("List (");
 
-        foreach (var item in value) stringBuilder.Append($"'{item.ToString()}', ");
+        foreach (var item in value) stringBuilder.Append($"'{item}', ");
 
         stringBuilder.Remove(stringBuilder.Length - 2, 2);
 

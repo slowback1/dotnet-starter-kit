@@ -1,5 +1,4 @@
-﻿
-using Common.Utilities.Attributes;
+﻿using Common.Utilities.Attributes;
 
 namespace Common.Tests.Utilities.Attributes;
 
@@ -118,7 +117,7 @@ public class NumericValueAttributeTests
     [Test]
     public void CanCustomizeThePropertyNameInTheErrorMessage()
     {
-        var attribute = new NumericValueAttribute(min: 1L, max: 10000L, propertyName: "My Prettified Name");
+        var attribute = new NumericValueAttribute(1L, 10000L, "My Prettified Name");
         attribute.PropertyName = "MyProperty";
         var value = 0L;
 

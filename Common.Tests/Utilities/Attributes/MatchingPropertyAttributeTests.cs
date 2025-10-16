@@ -1,5 +1,4 @@
-﻿
-using Common.Utilities.Attributes;
+﻿using Common.Utilities.Attributes;
 
 namespace Common.Tests.Utilities.Attributes;
 
@@ -59,7 +58,6 @@ public class MatchingPropertyAttributeTests
         Assert.Throws<InvalidOperationException>(() => attr.CheckForValidationError(obj),
             "Given invalid property name");
     }
-
 
     [Test]
     public void ThrowsInvalidOperationExceptionIfGivenInvalidPropertyB()

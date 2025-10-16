@@ -13,7 +13,8 @@ public class RegisterUseCase
     private readonly ICrud<AppUser> _userCrud;
 
     public RegisterUseCase(ICrud<AppUser> userCrud,
-        IPasswordHasher passwordHasher, ITokenHandler tokenHandler)
+        IPasswordHasher passwordHasher,
+        ITokenHandler tokenHandler)
     {
         _passwordHasher = passwordHasher;
         _tokenHandler = tokenHandler;

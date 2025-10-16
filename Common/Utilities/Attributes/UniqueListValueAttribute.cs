@@ -27,7 +27,6 @@ public class UniqueListValueAttribute : ValidationAttribute
 
         var hasDuplicates = CheckIfListHasDuplicates(objects);
 
-
         if (hasDuplicates)
             return ErrorResult();
 

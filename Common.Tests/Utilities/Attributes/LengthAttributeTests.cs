@@ -1,5 +1,4 @@
-﻿
-using Common.Utilities.Attributes;
+﻿using Common.Utilities.Attributes;
 
 namespace Common.Tests.Utilities.Attributes;
 

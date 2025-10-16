@@ -96,8 +96,7 @@ public static class ObjectValidator
 
     private class PropertyAttributeValuePair
     {
-        public IEnumerable<ValidationAttribute> CustomAttributes { get; set; } =
-            Enumerable.Empty<ValidationAttribute>();
+        public IEnumerable<ValidationAttribute> CustomAttributes { get; set; } = [];
 
         public object? Value { get; set; }
     }

@@ -55,7 +55,7 @@ public class ConsoleMenu(HandlerFactory handlerFactory)
         Console.WriteLine($"You selected: {handlerName}");
         Console.WriteLine("Enter arguments separated by spaces:");
         var argsInput = Console.ReadLine();
-        var args = argsInput?.Split(' ', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
+        var args = argsInput?.Split(' ', StringSplitOptions.RemoveEmptyEntries) ?? [];
         handler.HandleAsync(args).Wait();
         ShowMessageAndWait("Press any key to return to the menu...");
         return true;

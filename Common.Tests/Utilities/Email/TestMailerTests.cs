@@ -25,7 +25,7 @@ public class TestMailerTests
     }
 
     [Test]
-    public void SendMailThrowsAnSmtpExceptionWhenTheToFieldIsSetToERROR()
+    public void SendMailThrowsAnSmtpExceptionWhenTheToFieldIsSetToError()
     {
         var mailer = new TestMailer();
         var message = new MailMessage

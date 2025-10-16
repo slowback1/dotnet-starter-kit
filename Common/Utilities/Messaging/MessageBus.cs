@@ -7,9 +7,9 @@ namespace Common.Utilities.Messaging;
 
 public static class MessageBus
 {
-    private static readonly Dictionary<string, object> _lastMessages = new();
+    private static readonly Dictionary<string, object> LastMessages = new();
 
-    private static readonly Dictionary<string, List<MessageBusAction>> _subscribers = new();
+    private static readonly Dictionary<string, List<MessageBusAction>> Subscribers = new();
 
     private static List<MessageBusAction> _allMessageSubscribers = new();
 
@@ -17,12 +17,12 @@ public static class MessageBus
     {
         var function = ConvertToFunction(action);
 
-        if (!_subscribers.ContainsKey(message))
-            _subscribers.Add(message, new List<MessageBusAction> { function });
+        if (!Subscribers.TryGetValue(message, out var value))
+            Subscribers.Add(message, [function]);
         else
-            _subscribers[message].Add(function);
+            value.Add(function);
 
-        return () => { _subscribers[message] = _subscribers[message].Where(f => f.Id != function.Id).ToList(); };
+        return () => { Subscribers[message] = Subscribers[message].Where(f => f.Id != function.Id).ToList(); };
     }
 
     public static Action SubscribeToAllMessages<T>(Action<T> action)
@@ -54,7 +54,7 @@ public static class MessageBus
 
         foreach (var action in _allMessageSubscribers) TryPublishMessage(action.Action, payload);
 
-        if (!_subscribers.TryGetValue(message, out var actions)) return;
+        if (!Subscribers.TryGetValue(message, out var actions)) return;
 
         foreach (var action in actions) action.Action(payload!);
     }
@@ -73,7 +73,7 @@ public static class MessageBus
 
     private static void AddToDictionary<T>(string message, T payload)
     {
-        _lastMessages[message] = payload!;
+        LastMessages[message] = payload!;
     }
 
     public static async Task PublishAsync<T>(string message, T payload)
@@ -81,24 +81,24 @@ public static class MessageBus
         AddToDictionary(message, payload);
         foreach (var action in _allMessageSubscribers) TryPublishMessage(action.Action, payload);
 
-        if (!_subscribers.TryGetValue(message, out var actions)) return;
+        if (!Subscribers.TryGetValue(message, out var actions)) return;
 
         foreach (var action in actions) await Task.Run(() => action.Action(payload!));
     }
 
     public static T? GetLastMessage<T>(string message)
     {
-        return _lastMessages.ContainsKey(message) ? (T)_lastMessages[message] : default;
+        return LastMessages.TryGetValue(message, out var value) ? (T)value : default;
     }
 
     public static void ClearSubscribers()
     {
-        _subscribers.Clear();
+        Subscribers.Clear();
         _allMessageSubscribers.Clear();
     }
 
     public static void ClearMessages()
     {
-        _lastMessages.Clear();
+        LastMessages.Clear();
     }
 }

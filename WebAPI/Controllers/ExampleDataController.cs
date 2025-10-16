@@ -12,7 +12,7 @@ public class ExampleDataController : ApplicationController
 
     public ExampleDataController(ICrudFactory factory) : base(factory)
     {
-        _exampleDataCrud = _factory.GetCrud<ExampleData>();
+        _exampleDataCrud = Factory.GetCrud<ExampleData>();
     }
 
     [HttpGet("")]

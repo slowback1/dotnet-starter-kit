@@ -14,61 +14,64 @@ public abstract class InMemoryCrud<T> : ICrud<T> where T : class, IIdentifyable
     public virtual Task<T> CreateAsync(T item)
     {
         var type = typeof(T);
-        if (!ItemsByType.ContainsKey(type))
-            ItemsByType[type] = new List<T>();
+        if (!ItemsByType.TryGetValue(type, out var value))
+        {
+            value = [];
+            ItemsByType[type] = value;
+        }
         item.Id = (_nextId++).ToString();
-        ItemsByType[type].Add(item);
+        value.Add(item);
         return Task.FromResult(item);
     }
 
     public virtual Task<T?> GetByIdAsync(string id)
     {
         var type = typeof(T);
-        if (!ItemsByType.ContainsKey(type))
+        if (!ItemsByType.TryGetValue(type, out var items))
             return Task.FromResult<T?>(null);
-        var item = ItemsByType[type].FirstOrDefault(i => i.Id == id);
+        var item = items.FirstOrDefault(i => i.Id == id);
         return Task.FromResult<T?>(item);
     }
 
     public virtual Task<T?> UpdateAsync(string id, T item)
     {
         var type = typeof(T);
-        if (!ItemsByType.ContainsKey(type))
+        if (!ItemsByType.TryGetValue(type, out var items))
             return Task.FromResult<T?>(null);
-        var existingItem = ItemsByType[type].FirstOrDefault(i => i.Id == id);
+        var existingItem = items.FirstOrDefault(i => i.Id == id);
         if (existingItem == null) return Task.FromResult<T?>(null);
-        var index = ItemsByType[type].IndexOf(existingItem);
+        var index = items.IndexOf(existingItem);
         if (index < 0) return Task.FromResult<T?>(null);
-        ItemsByType[type][index] = item;
+        items[index] = item;
         return Task.FromResult(existingItem)!;
     }
 
     public virtual Task<bool> DeleteAsync(string id)
     {
         var type = typeof(T);
-        if (!ItemsByType.ContainsKey(type))
+        if (!ItemsByType.TryGetValue(type, out var items))
             return Task.FromResult(false);
-        var item = ItemsByType[type].FirstOrDefault(i => i.Id == id);
+        var item = items.FirstOrDefault(i => i.Id == id);
         if (item == null) return Task.FromResult(false);
-        ItemsByType[type].Remove(item);
+        items.Remove(item);
         return Task.FromResult(true);
     }
 
     public virtual Task<T?> GetByQueryAsync(Func<T, bool> query)
     {
         var type = typeof(T);
-        if (!ItemsByType.ContainsKey(type))
+        if (!ItemsByType.TryGetValue(type, out var items))
             return Task.FromResult<T?>(null);
-        var item = ItemsByType[type].FirstOrDefault(query);
+        var item = items.FirstOrDefault(query);
         return Task.FromResult<T?>(item);
     }
 
     public virtual Task<IEnumerable<T>> QueryAsync(Func<T, bool> query)
     {
         var type = typeof(T);
-        if (!ItemsByType.ContainsKey(type))
+        if (!ItemsByType.TryGetValue(type, out var items))
             return Task.FromResult(Enumerable.Empty<T>());
-        var results = ItemsByType[type].Where(query).ToList();
+        var results = items.Where(query).ToList();
         return Task.FromResult(results.AsEnumerable());
     }
 

@@ -8,37 +8,36 @@ namespace WebAPI.Configuration;
 ///     Handles the configuration and registration of CRUD factory implementations
 ///     based on application configuration.
 /// </summary>
-public class CrudFactoryConfigurator
+public static class CrudFactoryConfigurator
 {
-    public enum CrudFactoryType
-    {
-        InMemory,
-        FileData
-    }
+	public enum CrudFactoryType
+	{
+		InMemory,
+		FileData
+	}
 
-    /// <summary>
-    ///     Registers the appropriate CRUD factory implementation with the service collection.
-    /// </summary>
-    /// <param name="services">The service collection to configure</param>
-    /// <param name="configuration">Application configuration</param>
-    /// <param name="factoryType">Optional override for the factory type, otherwise reads from configuration</param>
-    public static void ConfigureCrudFactory(IServiceCollection services,
-        IConfiguration configuration,
-        CrudFactoryType? factoryType = null)
-    {
-        var crudFactoryImpl =
-            factoryType?.ToString() ?? configuration["CrudFactory:Implementation"] ?? "EntityFramework";
+	/// <summary>
+	///     Registers the appropriate CRUD factory implementation with the service collection.
+	/// </summary>
+	/// <param name="services">The service collection to configure</param>
+	/// <param name="configuration">Application configuration</param>
+	/// <param name="factoryType">Optional override for the factory type, otherwise reads from configuration</param>
+	public static void ConfigureCrudFactory(IServiceCollection services,
+		IConfiguration configuration,
+		CrudFactoryType? factoryType = null)
+	{
+		var crudFactoryImpl =
+			factoryType?.ToString() ?? configuration["CrudFactory:Implementation"] ?? "EntityFramework";
 
-        switch (crudFactoryImpl.ToLower())
-        {
-            case "filedata":
-                var dataDirectory = configuration["FileData:Directory"] ?? "data";
-                services.AddSingleton<ICrudFactory>(provider => new FileCrudFactory(dataDirectory));
-                break;
-            case "inmemory":
-            default:
-                services.AddSingleton<ICrudFactory, InMemoryCrudFactory>();
-                break;
-        }
-    }
+		switch (crudFactoryImpl.ToLower())
+		{
+			case "filedata":
+				var dataDirectory = configuration["FileData:Directory"] ?? "data";
+				services.AddSingleton<ICrudFactory>(_ => new FileCrudFactory(dataDirectory));
+				break;
+			default:
+				services.AddSingleton<ICrudFactory, InMemoryCrudFactory>();
+				break;
+		}
+	}
 }

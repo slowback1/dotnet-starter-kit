@@ -5,20 +5,19 @@ using Microsoft.Extensions.Configuration;
 
 namespace ConsoleUtilities;
 
-public class CrudFactoryMaker
+public static class CrudFactoryMaker
 {
-    public static ICrudFactory ConfigureCrudFactory(IConfiguration configuration)
-    {
-        var crudFactoryImpl = configuration["CrudFactory:Implementation"] ?? "InMemory";
+	public static ICrudFactory ConfigureCrudFactory(IConfiguration configuration)
+	{
+		var crudFactoryImpl = configuration["CrudFactory:Implementation"] ?? "InMemory";
 
-        switch (crudFactoryImpl.ToLower())
-        {
-            case "filedata":
-                var dataDirectory = configuration["FileData:Directory"] ?? "data";
-                return new FileCrudFactory(dataDirectory);
-            case "inmemory":
-            default:
-                return new InMemoryCrudFactory();
-        }
-    }
+		switch (crudFactoryImpl.ToLower())
+		{
+			case "filedata":
+				var dataDirectory = configuration["FileData:Directory"] ?? "data";
+				return new FileCrudFactory(dataDirectory);
+			default:
+				return new InMemoryCrudFactory();
+		}
+	}
 }

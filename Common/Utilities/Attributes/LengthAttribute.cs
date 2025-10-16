@@ -6,16 +6,10 @@ using System.Text;
 
 namespace Common.Utilities.Attributes;
 
-public class LengthAttribute : ValidationAttribute
+public class LengthAttribute(int max = int.MaxValue, int min = 0) : ValidationAttribute
 {
-    private readonly int _max;
-    private readonly int _min;
-
-    public LengthAttribute(int max = int.MaxValue, int min = 0)
-    {
-        _max = max;
-        _min = min;
-    }
+    private readonly int _max = max;
+    private readonly int _min = min;
 
     public override string? CheckForValidationError(object? value)
     {

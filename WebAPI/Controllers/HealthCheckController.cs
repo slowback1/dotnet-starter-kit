@@ -10,11 +10,8 @@ public class HealthCheckResult
 }
 
 [Route("HealthCheck")]
-public class HealthCheckController : ApplicationController
+public class HealthCheckController(ICrudFactory factory) : ApplicationController(factory)
 {
-    public HealthCheckController(ICrudFactory factory) : base(factory)
-    {
-    }
 
     [HttpGet]
     [Route("")]

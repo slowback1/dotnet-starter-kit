@@ -4,14 +4,9 @@ using Common.Models;
 
 namespace Logic;
 
-public class GetExampleDataUseCase
+public class GetExampleDataUseCase(ICrud<ExampleData> crud)
 {
-    private readonly ICrud<ExampleData> _crud;
-
-    public GetExampleDataUseCase(ICrud<ExampleData> crud)
-    {
-        _crud = crud;
-    }
+    private readonly ICrud<ExampleData> _crud = crud;
 
     public Task<UseCaseResult<ExampleData>> Execute()
     {

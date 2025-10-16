@@ -5,16 +5,10 @@ using System.Reflection;
 
 namespace Common.Utilities.Attributes;
 
-public class UniqueListValueAttribute : ValidationAttribute
+public class UniqueListValueAttribute(string propertyName, string? errorMessage = null) : ValidationAttribute
 {
-    private readonly string? _errorMessage;
-    private readonly string _propertyName;
-
-    public UniqueListValueAttribute(string propertyName, string? errorMessage = null)
-    {
-        _propertyName = propertyName;
-        _errorMessage = errorMessage;
-    }
+    private readonly string? _errorMessage = errorMessage;
+    private readonly string _propertyName = propertyName;
 
     public override string? CheckForValidationError(object? value)
     {

@@ -3,12 +3,7 @@ using Common.Interfaces;
 
 namespace FileData.Tests;
 
-public class TestFileCrud<T> : FileCrud<T> where T : class, IIdentifyable
-{
-    public TestFileCrud(string dataDirectory = "data") : base(dataDirectory)
-    {
-    }
-}
+public class TestFileCrud<T>(string dataDirectory = "data") : FileCrud<T>(dataDirectory) where T : class, IIdentifyable;
 
 public class TestEntityForFileCrud : IIdentifyable
 {

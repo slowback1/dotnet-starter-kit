@@ -3,18 +3,11 @@ using System.Linq;
 
 namespace Common.Utilities.Attributes;
 
-public class MatchingPropertyAttribute : ValidationAttribute
+public class MatchingPropertyAttribute(string propertyA, string propertyB, string? errorMessage = null) : ValidationAttribute
 {
-    private readonly string? _errorMessage;
-    private readonly string _propertyA;
-    private readonly string _propertyB;
-
-    public MatchingPropertyAttribute(string propertyA, string propertyB, string? errorMessage = null)
-    {
-        _propertyA = propertyA;
-        _propertyB = propertyB;
-        _errorMessage = errorMessage;
-    }
+    private readonly string? _errorMessage = errorMessage;
+    private readonly string _propertyA = propertyA;
+    private readonly string _propertyB = propertyB;
 
     public override string? CheckForValidationError(object? value)
     {

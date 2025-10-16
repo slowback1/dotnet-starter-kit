@@ -41,8 +41,9 @@ public class FileLoggingEngine : ILoggingEngine
         Settings = DefaultSettings;
     }
 
-    public FileLoggingEngine(FileLoggingEngineSettings settings) : this()
+    public FileLoggingEngine(FileLoggingEngineSettings settings)
     {
+        _timeProvider = TimeEnvironment.Provider;
         Settings = settings;
     }
 

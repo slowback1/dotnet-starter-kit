@@ -4,11 +4,8 @@ using Logic;
 
 namespace ConsoleUtilities.Handlers;
 
-public class GetExampleDataHandler : BaseHandler
+public class GetExampleDataHandler(ICrudFactory crudFactory) : BaseHandler(crudFactory)
 {
-    public GetExampleDataHandler(ICrudFactory crudFactory) : base(crudFactory)
-    {
-    }
 
     public override async Task HandleAsync(string[] args)
     {

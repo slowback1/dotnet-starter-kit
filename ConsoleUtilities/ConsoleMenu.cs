@@ -2,15 +2,10 @@ using ConsoleUtilities.Handlers;
 
 namespace ConsoleUtilities;
 
-public class ConsoleMenu
+public class ConsoleMenu(HandlerFactory handlerFactory)
 {
     private const int MaxItemsPerPage = 5;
-    private readonly HandlerFactory _handlerFactory;
-
-    public ConsoleMenu(HandlerFactory handlerFactory)
-    {
-        _handlerFactory = handlerFactory;
-    }
+    private readonly HandlerFactory _handlerFactory = handlerFactory;
 
     public void ShowMenu()
     {

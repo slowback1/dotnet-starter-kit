@@ -4,14 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
 
-public abstract class ApplicationController : Controller
+public abstract class ApplicationController(ICrudFactory factory) : Controller
 {
-    protected readonly ICrudFactory _factory;
-
-    protected ApplicationController(ICrudFactory factory)
-    {
-        _factory = factory;
-    }
+    protected readonly ICrudFactory _factory = factory;
 
     protected ActionResult ToActionResult<T>(UseCaseResult<T> result)
     {
